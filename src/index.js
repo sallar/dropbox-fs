@@ -155,7 +155,14 @@ readdir('/', (err, files) => {
     console.log(stat);
 });*/
 
-/*writeFile('/sallar.txt', "sallar 222", (err, stat) => {
+/*writeFile('/sallar2.txt', "sallar 222", (err, stat) => {
     console.log(err, stat);
-})
-*/
+})*/
+
+/*rename('/sallar2.txt', '/sherry.txt', () => {
+    console.log("SHIT");
+});*/
+
+/*unlink('/sallar.txt', () => {
+    console.log("done");
+});*/
