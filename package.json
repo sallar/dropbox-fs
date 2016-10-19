@@ -1,11 +1,12 @@
 {
   "name": "dropbox-fs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Node FS wrapper for Dropbox API",
   "main": "dist/index.js",
   "scripts": {
     "test": "nyc --require babel-core/register mocha",
-    "dev": "babel src/ | node"
+    "nyc-report": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "prepublish": "babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
@@ -27,10 +28,12 @@
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.16.0",
     "codecov": "^1.0.1",
     "mocha": "^3.1.2",
-    "nyc": "^8.3.1"
+    "nyc": "^8.3.1",
+    "uuid": "^2.0.3"
   },
   "dependencies": {
     "dropbox": "^2.3.0"

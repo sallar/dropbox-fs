@@ -1,4 +1,4 @@
-const Dropbox = require("dropbox");
+import Dropbox from 'dropbox';
 
 /**
  * Convert an object to fs-like stat object
@@ -65,7 +65,7 @@ function __normalizePath(remotePath) {
  * }} Configuration object
  * @returns {Object}
  */
-module.exports = ({apiKey = null, client = null} = {}) => {
+export default ({apiKey = null, client = null} = {}) => {
 
     if (!client && typeof apiKey === 'string') {
         client = new Dropbox({
@@ -219,6 +219,7 @@ module.exports = ({apiKey = null, client = null} = {}) => {
 
             client
                 .filesUpload(uploadOpts).then(meta => {
+                    meta['.tag'] = 'file';
                     meta = __convertToStat(meta);
                     __executeCallbackAsync(callback, [null, meta]);
                 })
