@@ -1,0 +1,26 @@
+{
+  "name": "dropbox-fs",
+  "version": "0.0.1",
+  "description": "Node FS wrapper for Dropbox API",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "nyc --require babel-core/register mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sallar/dropbox-fs.git"
+  },
+  "keywords": [
+    "dropbox",
+    "fs",
+    "node",
+    "filesystem",
+    "file"
+  ],
+  "author": "Sallar Kaboli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sallar/dropbox-fs/issues"
+  },
+  "homepage": "https://github.com/sallar/dropbox-fs#readme"
+}
