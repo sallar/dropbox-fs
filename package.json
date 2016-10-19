@@ -30,5 +30,8 @@
     "codecov": "^1.0.1",
     "mocha": "^3.1.2",
     "nyc": "^8.3.1"
+  },
+  "dependencies": {
+    "dropbox": "^2.3.0"
   }
 }
