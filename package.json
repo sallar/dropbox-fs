@@ -4,7 +4,8 @@
   "description": "Node FS wrapper for Dropbox API",
   "main": "dist/index.js",
   "scripts": {
-    "test": "nyc --require babel-core/register mocha"
+    "test": "nyc --require babel-core/register mocha",
+    "dev": "babel src/ | node"
   },
   "repository": {
     "type": "git",
