@@ -75,7 +75,7 @@ export default ({apiKey = null, client = null} = {}) => {
         throw new Error('Dropbox client or apiKey should be provided.');
     }
 
-    return {
+    const api = {
         /**
          * Read a directory and list all the files and folders inside
          * 
@@ -102,6 +102,23 @@ export default ({apiKey = null, client = null} = {}) => {
                         throw new Error(`Unknow mode: ${mode}`);
                     }
                     __executeCallbackAsync(callback, [null, entries]);
+                })
+                .catch(callback);
+        },
+
+        /**
+         * Create a remote directory
+         * 
+         * @param {String} remotePath
+         * @param {Function} callback
+         */
+        mkdir(remotePath, callback) {
+            client
+                .filesCreateFolder({path: __normalizePath(remotePath)})
+                .then(meta => {
+                    meta['.tag'] = 'folder';
+                    meta = __convertToStat(meta);
+                    __executeCallbackAsync(callback, [null, meta]);
                 })
                 .catch(callback);
         },
@@ -225,5 +242,9 @@ export default ({apiKey = null, client = null} = {}) => {
                 })
                 .catch(callback);
         }
-    }
+    };
+
+    api.rmdir = api.unlink;
+
+    return api;
 };

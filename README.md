@@ -23,19 +23,53 @@ dfs.readdir('/Public', (err, result) => {
 });
 ```
 
+You can also pass in a `client` option if you’re using your own `dropbox` module instead of the `apiKey`.
+
 ## API
 
 This module exposes the following methods:
 
 ### readdir(path[, options], callback)
 
-Read a directory and return a list of files and folders
+Reads a directory and returns a list of files and folders inside.
 
 ``` js
 dfs.readdir('/', (err, result) => {
     console.log(result);
 });
 ```
+
+- `path`: `String|Buffer`
+- `callback`: `Function`
+
+### mkdir(path, callback)
+
+Creates a directory.
+
+``` js
+dfs.mkdir('/Public/Resume', (err, stat) => {
+    console.log(stat.name); // Resume
+    console.log(stat.isDirectory()); // true
+});
+```
+
+- `path`: `String|Buffer`
+- `callback`: `Function`
+
+### rmdir(path, callback)
+
+Deletes a directory.
+
+``` js
+dfs.rmdir('/Public/Resume', err => {
+    if (!err) {
+        console.log('Deleted.');
+    }
+});
+```
+
+- `path`: `String|Buffer`
+- `callback`: `Function`
 
 ### readFile(path[, options], callback)
 
@@ -83,8 +117,8 @@ dfs.writeFile('/Public/doc.md', content, {encoding: 'utf8'}, (err, stat) => {
 Renames a file (moves it to a new location).
 
 ``` js
-dfs.rename('/Public/doc.md', '/Backups/doc-backup.md', (err) => {
-    if (err) {
+dfs.rename('/Public/doc.md', '/Backups/doc-backup.md', err => {
+    if err {
         console.error('Failed!');
     } else {
         console.log('Moved!');
@@ -98,7 +132,7 @@ dfs.rename('/Public/doc.md', '/Backups/doc-backup.md', (err) => {
 
 ### stat(path, callback)
 
-Returns the file/folder information
+Returns the file/folder information.
 
 ``` js
 dfs.stat('/Some/Remote/Folder/', (err, stat) => {
@@ -114,10 +148,10 @@ dfs.stat('/Some/Remote/Folder/', (err, stat) => {
 
 ### unlink(path, callback)
 
-Deletes a file or folder
+Deletes a file.
 
 ``` js
-dfs.unlink('/Path/To/file.txt', (err) => {
+dfs.unlink('/Path/To/file.txt', err => {
     if (!err) {
         console.log('Deleted!');
     }
