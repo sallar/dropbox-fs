@@ -147,9 +147,22 @@ export default ({apiKey = null, client = null} = {}) => {
             client
                 .filesDownload({path: __normalizePath(remotePath)})
                 .then(resp => {
-                    let buffer = Buffer.from(resp.fileBinary);
-                    buffer = encoding ? buffer.toString(encoding) : buffer;
-                    __executeCallbackAsync(callback, [null, buffer]);
+                    if (resp.fileBinary) {
+                        // Probably running in node: `fileBinary` is passed
+                        var buffer = Buffer.from(resp.fileBinary);
+                        buffer = encoding ? buffer.toString(encoding) : buffer;
+                        __executeCallbackAsync(callback, [null, buffer]);
+                    } else {
+                        // Probably browser environment: use FileReader + ArrayBuffer
+                        var fileReader = new FileReader(),
+                            buffer;
+                        fileReader.onload = function() {
+                            buffer = Buffer.from(this.result);
+                            buffer = encoding ? buffer.toString(encoding) : buffer;
+                            __executeCallbackAsync(callback, [null, buffer]);
+                        };
+                        fileReader.readAsArrayBuffer(resp.fileBlob);
+                    }
                 })
                 .catch(callback);
         },
