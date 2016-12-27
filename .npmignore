@@ -1,2 +1,5 @@
 test
 src
+.babelrc
+.travis.yml
+yarn.lock
