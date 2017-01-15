@@ -1,5 +1,7 @@
 import Dropbox from 'dropbox';
 
+const TYPE_KEY = '@@fsType';
+
 /**
  * Convert an object to fs-like stat object
  * 
@@ -76,6 +78,10 @@ export default ({apiKey = null, client = null} = {}) => {
     }
 
     const api = {
+
+        // fs adapter type (for downstream integrations)
+        [TYPE_KEY]: "dropbox-fs",
+
         /**
          * Read a directory and list all the files and folders inside
          * 
