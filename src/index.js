@@ -155,13 +155,13 @@ export default ({apiKey = null, client = null} = {}) => {
                 .then(resp => {
                     if (resp.fileBinary) {
                         // Probably running in node: `fileBinary` is passed
-                        var buffer = Buffer.from(resp.fileBinary);
+                        let buffer = Buffer.from(resp.fileBinary);
                         buffer = encoding ? buffer.toString(encoding) : buffer;
                         __executeCallbackAsync(callback, [null, buffer]);
                     } else {
                         // Probably browser environment: use FileReader + ArrayBuffer
-                        var fileReader = new FileReader(),
-                            buffer;
+                        const fileReader = new FileReader();
+                        let buffer;
                         fileReader.onload = function() {
                             buffer = Buffer.from(this.result);
                             buffer = encoding ? buffer.toString(encoding) : buffer;
@@ -228,13 +228,17 @@ export default ({apiKey = null, client = null} = {}) => {
          * 
          * @param {String} remotePath
          * @param {String|Buffer} data
-         * @param {Object} options
+         * @param {Object|String} options
          * @param {Function} callback
          */
         writeFile(remotePath, data, options = {}, callback) {
             if (typeof options === 'function') {
                 callback = options;
                 options = {};
+            } else if (typeof options === 'string') {
+                options = {
+                    encoding: options
+                };
             }
 
             options = Object.assign({
