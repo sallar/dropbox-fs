@@ -8,7 +8,7 @@ const readonly = proxyquire('../src/readonly', {
     './index': fsFactory,
 });
 
-describe.only('readonly', function() {
+describe('readonly', function() {
 
     describe('#ctor', function() {
 
