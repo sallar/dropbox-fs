@@ -25,6 +25,25 @@ dfs.readdir('/Public', (err, result) => {
 
 You can also pass in a `client` option if you’re using your own `dropbox` module instead of the `apiKey`.
 
+If you'd like some peace of mind then there's a read-only option too:
+
+``` js
+const dfs = require('dropbox-fs/readonly')({
+    apiKey: 'DROPBOX_API_KEY_HERE'
+});
+
+// Methods that might change data now return an error without performing any action:
+// - mkdir
+// - rename
+// - rmdir
+// - unlink
+// - writeFile
+
+dfs.unlink('/Public', (err) => {
+    console.log(err); // Message saying `unlink` is not supported in read-only
+});
+```
+
 ## API
 
 This module exposes the following methods:
