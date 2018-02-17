@@ -1,7 +1,7 @@
 {
   "presets": ["stage-3"],
   "plugins": [
-    "transform-es2015-modules-commonjs",
-    "add-module-exports"
+    "add-module-exports",
+    "transform-es2015-modules-commonjs"
   ]
 }
