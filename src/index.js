@@ -4,7 +4,7 @@ const TYPE_KEY = '@@fsType';
 
 /**
  * Convert an object to fs-like stat object
- * 
+ *
  * @param {Object} entry
  * @returns {Object}
  */
@@ -18,12 +18,12 @@ function __convertToStat(entry) {
 /**
  * Execute a callback async
  * Borrowed from: https://github.com/perry-mitchell/webdav-fs/blob/master/source/index.js#L19
- * 
+ *
  * @param {Function} callback
  * @param {Array.<Any>} args
  */
 function __executeCallbackAsync(callback, args) {
-    if (typeof setImmediate !== "undefined") {
+    if (typeof setImmediate !== 'undefined') {
         setImmediate(function() {
             callback.apply(null, args);
         });
@@ -38,7 +38,7 @@ function __executeCallbackAsync(callback, args) {
  * Normalize an input path string or buffer
  * Dropbox doesn’t allow '/' for root, it should be an empty string
  * and some users prefer to prefix the path with a dot.
- * 
+ *
  * @param {String|Buffer} remotePath
  * @returns {String}
  */
@@ -50,7 +50,7 @@ function __normalizePath(remotePath) {
     if (remotePath === '/') {
         return '';
     }
-    
+
     if (remotePath.indexOf('./') === 0) {
         return remotePath.replace(/\.\//, '');
     }
@@ -60,15 +60,14 @@ function __normalizePath(remotePath) {
 
 /**
  * Create an fs-like API for Dropbox
- * 
+ *
  * @param {{
  *  apiKey: String,
  *  client: Dropbox
  * }} Configuration object
  * @returns {Object}
  */
-export default ({apiKey = null, client = null} = {}) => {
-
+export default ({ apiKey = null, client = null } = {}) => {
     if (!client && typeof apiKey === 'string') {
         client = new Dropbox({
             accessToken: apiKey
@@ -78,14 +77,13 @@ export default ({apiKey = null, client = null} = {}) => {
     }
 
     const api = {
-
         // fs adapter type (for downstream integrations)
-        [TYPE_KEY]: "dropbox-fs",
+        [TYPE_KEY]: 'dropbox-fs',
 
         /**
          * Read a directory and list all the files and folders inside
-         * 
-         * @param {String} remotePath 
+         *
+         * @param {String} remotePath
          * @param {Object} options
          * @param {Function} callback
          */
@@ -98,8 +96,8 @@ export default ({apiKey = null, client = null} = {}) => {
             const mode = options.mode || 'node';
 
             client
-                .filesListFolder({path: __normalizePath(remotePath)})
-                .then(({entries}) => {
+                .filesListFolder({ path: __normalizePath(remotePath) })
+                .then(({ entries }) => {
                     if (mode === 'node') {
                         entries = entries.map(entry => entry.name);
                     } else if (mode === 'stat') {
@@ -114,13 +112,13 @@ export default ({apiKey = null, client = null} = {}) => {
 
         /**
          * Create a remote directory
-         * 
+         *
          * @param {String} remotePath
          * @param {Function} callback
          */
         mkdir(remotePath, callback) {
             client
-                .filesCreateFolder({path: __normalizePath(remotePath)})
+                .filesCreateFolder({ path: __normalizePath(remotePath) })
                 .then(meta => {
                     meta['.tag'] = 'folder';
                     meta = __convertToStat(meta);
@@ -131,12 +129,12 @@ export default ({apiKey = null, client = null} = {}) => {
 
         /**
          * Read a remote file and return it’s contents
-         * 
+         *
          * @param {String} remotePath
          * @param {Object} options
          * @param {Function} callback
          */
-        readFile(remotePath, options = {encoding: null}, callback) {
+        readFile(remotePath, options = { encoding: null }, callback) {
             if (typeof options === 'function') {
                 callback = options;
                 options = {
@@ -151,7 +149,7 @@ export default ({apiKey = null, client = null} = {}) => {
             const { encoding } = options;
 
             client
-                .filesDownload({path: __normalizePath(remotePath)})
+                .filesDownload({ path: __normalizePath(remotePath) })
                 .then(resp => {
                     if (resp.fileBinary) {
                         // Probably running in node: `fileBinary` is passed
@@ -164,7 +162,9 @@ export default ({apiKey = null, client = null} = {}) => {
                         let buffer;
                         fileReader.onload = function() {
                             buffer = Buffer.from(this.result);
-                            buffer = encoding ? buffer.toString(encoding) : buffer;
+                            buffer = encoding
+                                ? buffer.toString(encoding)
+                                : buffer;
                             __executeCallbackAsync(callback, [null, buffer]);
                         };
                         fileReader.readAsArrayBuffer(resp.fileBlob);
@@ -175,7 +175,7 @@ export default ({apiKey = null, client = null} = {}) => {
 
         /**
          * Rename (move) a remote file
-         * 
+         *
          * @param {String} fromPath
          * @param {String} toPath
          * @param {Function} callback
@@ -194,13 +194,13 @@ export default ({apiKey = null, client = null} = {}) => {
 
         /**
          * Return file or folder meta data
-         * 
+         *
          * @param {String} remotePath
          * @param {Function} callback
          */
         stat(remotePath, callback) {
             client
-                .filesGetMetadata({path: __normalizePath(remotePath)})
+                .filesGetMetadata({ path: __normalizePath(remotePath) })
                 .then(meta => {
                     meta = __convertToStat(meta);
                     __executeCallbackAsync(callback, [null, meta]);
@@ -210,13 +210,13 @@ export default ({apiKey = null, client = null} = {}) => {
 
         /**
          * Delete a file or folder
-         * 
+         *
          * @param {String} remotePath
          * @param {Function} callback
          */
         unlink(remotePath, callback) {
             client
-                .filesDelete({path: __normalizePath(remotePath)})
+                .filesDelete({ path: __normalizePath(remotePath) })
                 .then(() => {
                     __executeCallbackAsync(callback, [null]);
                 })
@@ -225,7 +225,7 @@ export default ({apiKey = null, client = null} = {}) => {
 
         /**
          * Write a file
-         * 
+         *
          * @param {String} remotePath
          * @param {String|Buffer} data
          * @param {Object|String} options
@@ -241,14 +241,20 @@ export default ({apiKey = null, client = null} = {}) => {
                 };
             }
 
-            options = Object.assign({
-                overwrite: true,
-                encoding: 'utf8'
-            }, options);
+            options = Object.assign(
+                {
+                    overwrite: true,
+                    encoding: 'utf8'
+                },
+                options
+            );
 
             const uploadOpts = {
                 path: __normalizePath(remotePath),
-                contents: (data instanceof Buffer) ? data : Buffer.from(data, options.encoding)
+                contents:
+                    data instanceof Buffer
+                        ? data
+                        : Buffer.from(data, options.encoding)
             };
 
             if (options.overwrite !== false) {
@@ -258,7 +264,8 @@ export default ({apiKey = null, client = null} = {}) => {
             }
 
             client
-                .filesUpload(uploadOpts).then(meta => {
+                .filesUpload(uploadOpts)
+                .then(meta => {
                     meta['.tag'] = 'file';
                     meta = __convertToStat(meta);
                     __executeCallbackAsync(callback, [null, meta]);

@@ -1,17 +1,16 @@
-import assert from "assert";
-import { v4 } from "uuid";
+import assert from 'assert';
+import { v4 } from 'uuid';
 
 const fs = require('../src/index')({
     apiKey: process.env.DROPBOX_API_KEY
 });
 
-describe("fs.mkdir()", function() {
-
+describe('fs.mkdir()', function() {
     this.timeout(10000);
 
     const dirName = v4();
 
-    it("Creates a folder", (done) => {
+    it('Creates a folder', done => {
         fs.mkdir(`/mkdir-test/${dirName}`, (err, stat) => {
             assert.equal(err, null);
             assert.equal(stat.isDirectory(), true);
@@ -20,11 +19,10 @@ describe("fs.mkdir()", function() {
         });
     });
 
-    it("Deletes a folder", (done) => {
-        fs.rmdir(`/mkdir-test/${dirName}`, (err) => {
+    it('Deletes a folder', done => {
+        fs.rmdir(`/mkdir-test/${dirName}`, err => {
             assert.equal(err, null);
             done();
         });
     });
-
 });

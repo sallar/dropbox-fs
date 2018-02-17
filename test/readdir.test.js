@@ -1,14 +1,13 @@
-import assert from "assert";
+import assert from 'assert';
 
 const fs = require('../src/index')({
     apiKey: process.env.DROPBOX_API_KEY
 });
 
-describe("fs.readdir()", function() {
-
+describe('fs.readdir()', function() {
     this.timeout(10000);
 
-    it("Reads root folder", (done) => {
+    it('Reads root folder', done => {
         fs.readdir('/', (err, result) => {
             assert.equal(err, null);
             assert.ok(Array.isArray(result));
@@ -17,7 +16,7 @@ describe("fs.readdir()", function() {
         });
     });
 
-    it("Reads sub folders", (done) => {
+    it('Reads sub folders', done => {
         fs.readdir('/list-test', (err, result) => {
             assert.equal(err, null);
             assert.ok(Array.isArray(result));
@@ -29,19 +28,22 @@ describe("fs.readdir()", function() {
         });
     });
 
-    it("Returns stat if option provided", (done) => {
-        fs.readdir('/list-test', {
-            mode: 'stat'
-        }, (err, result) => {
-            assert.equal(err, null);
-            result.forEach(file => {
-                assert.equal(typeof file.isDirectory, 'function');
-                assert.equal(typeof file.isFile, 'function');
-                assert.equal(typeof file.name, 'string');
-                assert.equal(file.isFile(), true);
-            });
-            done();
-        });
+    it('Returns stat if option provided', done => {
+        fs.readdir(
+            '/list-test',
+            {
+                mode: 'stat'
+            },
+            (err, result) => {
+                assert.equal(err, null);
+                result.forEach(file => {
+                    assert.equal(typeof file.isDirectory, 'function');
+                    assert.equal(typeof file.isFile, 'function');
+                    assert.equal(typeof file.name, 'string');
+                    assert.equal(file.isFile(), true);
+                });
+                done();
+            }
+        );
     });
-
 });
