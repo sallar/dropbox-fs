@@ -4,10 +4,11 @@
   "description": "Node FS wrapper for Dropbox API",
   "main": "dist/index.js",
   "scripts": {
+    "build": "babel src --out-dir dist",
     "format": "prettier --write '{src,test}/**/*.js'",
     "test": "nyc --require babel-core/register mocha",
     "nyc-report": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "prepublish": "babel src --out-dir dist"
+    "prepublish": "npm run build"
   },
   "lint-staged": {
     "{src,test}/**/*.js": [
@@ -36,7 +37,8 @@
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.16.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-preset-stage-3": "^6.24.1",
     "codecov": "^1.0.1",
     "husky": "^0.14.3",
     "lint-staged": "^6.1.1",
