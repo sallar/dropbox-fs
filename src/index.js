@@ -9,10 +9,11 @@ const TYPE_KEY = '@@fsType';
  * @returns {Object}
  */
 function __convertToStat(entry) {
-    return Object.assign({}, entry, {
+    return {
+        ...entry,
         isFile: () => entry['.tag'] === 'file',
         isDirectory: () => entry['.tag'] === 'folder'
-    });
+    };
 }
 
 /**
@@ -241,13 +242,11 @@ export default ({ apiKey = null, client = null } = {}) => {
                 };
             }
 
-            options = Object.assign(
-                {
-                    overwrite: true,
-                    encoding: 'utf8'
-                },
-                options
-            );
+            options = {
+                overwrite: true,
+                encoding: 'utf8',
+                ...options
+            };
 
             const uploadOpts = {
                 path: __normalizePath(remotePath),
