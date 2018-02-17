@@ -5,13 +5,11 @@ import { spy, stub } from 'sinon';
 // Use proxyquire to inject our own stub FS factory so we don't have to hit Dropbox
 const fsFactory = stub();
 const readonly = proxyquire('../src/readonly', {
-    './index': fsFactory,
+    './index': fsFactory
 });
 
 describe('readonly', function() {
-
     describe('#ctor', function() {
-
         beforeEach(() => fsFactory.returns({}));
         afterEach(() => fsFactory.reset());
 
@@ -26,16 +24,14 @@ describe('readonly', function() {
             readonly({ client });
             assert(fsFactory.alwaysCalledWithMatch({ client }));
         });
-
     });
 
     describeSafeMethod('readdir', 'dummypath');
     describeSafeMethod('readFile', 'dummypath');
     describeSafeMethod('stat', 'dummypath');
 
-    function describeSafeMethod (name, ...args) {
+    function describeSafeMethod(name, ...args) {
         describe(`#${name}`, () => {
-
             // Stub out the corresponding method on the normal API
             const fsMethod = spy();
             beforeEach(() => fsMethod.resetHistory());
@@ -50,7 +46,6 @@ describe('readonly', function() {
 
                 assert(fsMethod.alwaysCalledWithExactly(...args, noopCallback));
             });
-
         });
     }
 
@@ -60,9 +55,8 @@ describe('readonly', function() {
     describeDangerousMethod('unlink', 'dummypath');
     describeDangerousMethod('writeFile', 'dummypath', null);
 
-    function describeDangerousMethod (name, ...args) {
+    function describeDangerousMethod(name, ...args) {
         describe(`#${name}`, () => {
-
             // Stub out the corresponding method on the normal API
             const fsMethod = spy();
             beforeEach(() => fsMethod.resetHistory());
@@ -84,12 +78,14 @@ describe('readonly', function() {
                 const callback = spy();
                 readonlyFs[name](...args, callback);
 
-                assert(callback.alwaysCalledWithExactly(`${name} is not supported in read-only mode`));
+                assert(
+                    callback.alwaysCalledWithExactly(
+                        `${name} is not supported in read-only mode`
+                    )
+                );
             });
-
         });
     }
-
 });
 
 const noopCallback = () => {};

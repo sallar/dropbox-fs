@@ -1,17 +1,11 @@
 import normalDropboxFS from './index';
 
 // List of API methods that should be prevented in read-only mode
-const dangerousMethods = [
-    'mkdir',
-    'rename',
-    'rmdir',
-    'unlink',
-    'writeFile',
-];
+const dangerousMethods = ['mkdir', 'rename', 'rmdir', 'unlink', 'writeFile'];
 
 /**
  * Create a read-only fs-like API for Dropbox
- * 
+ *
  * @param {{
  *  apiKey: String,
  *  client: Dropbox,
@@ -19,10 +13,9 @@ const dangerousMethods = [
  * @returns {Object}
  */
 export default ({ client, apiKey }) => {
-
     const api = normalDropboxFS({ client, apiKey });
 
-    const returnError = (method) => (...methodArgs) => {
+    const returnError = method => (...methodArgs) => {
         const cb = methodArgs[methodArgs.length - 1];
         cb(`${method} is not supported in read-only mode`);
     };
