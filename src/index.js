@@ -1,4 +1,5 @@
 import Dropbox from 'dropbox';
+import dropboxStream from 'dropbox-stream';
 
 const TYPE_KEY = '@@fsType';
 
@@ -222,6 +223,35 @@ export default ({ apiKey = null, client = null } = {}) => {
                     __executeCallbackAsync(callback, [null]);
                 })
                 .catch(callback);
+        },
+        
+        /**
+         * create write stream
+         *
+         * @param {String} token
+         * @param {String} remotePath
+         * @returns {Stream}
+         */
+        createWriteStream(filepath) {
+            return dropboxStream.createDropboxUploadStream({
+                token: client.accessToken,
+                filepath,
+                chunkSize: 1000 * 1024
+            });
+        },
+
+        /**
+         * create read stream
+         *
+         * @param {String} token
+         * @param {String} remotePath
+         * @returns {Stream}
+         */
+        createReadStream(filepath) {
+            return dropboxStream.createDropboxDownloadStream({
+                token: client.accessToken,
+                filepath
+            });
         },
 
         /**
