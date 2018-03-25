@@ -105,7 +105,7 @@ export default ({ apiKey = null, client = null } = {}) => {
                     } else if (mode === 'stat') {
                         entries = entries.map(entry => __convertToStat(entry));
                     } else {
-                        throw new Error(`Unknow mode: ${mode}`);
+                        return callback(new Error(`Unknow mode: ${mode}`));
                     }
                     __executeCallbackAsync(callback, [null, entries]);
                 })

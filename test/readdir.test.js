@@ -16,6 +16,22 @@ describe('fs.readdir()', function() {
         });
     });
 
+    it('Handles buffer as filePath and cleans URL', done => {
+        // This is buffer to test internal methods
+        const path = new Buffer('./', 'utf8');
+        fs.readdir(path, (err, result) => {
+            assert.equal(err, null);
+            done();
+        });
+    });
+
+    it('Throws error for unknown mode', done => {
+        fs.readdir('/', { mode: 'unknown' }, (err, result) => {
+            assert.ok(err instanceof Error);
+            done();
+        });
+    });
+
     it('Reads sub folders', done => {
         fs.readdir('/list-test', (err, result) => {
             assert.equal(err, null);
