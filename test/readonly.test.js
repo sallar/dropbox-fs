@@ -29,6 +29,7 @@ describe('readonly', function() {
     describeSafeMethod('readdir', 'dummypath');
     describeSafeMethod('readFile', 'dummypath');
     describeSafeMethod('stat', 'dummypath');
+    describeSafeMethod('createReadStream', 'dummypath');
 
     function describeSafeMethod(name, ...args) {
         describe(`#${name}`, () => {
@@ -54,6 +55,7 @@ describe('readonly', function() {
     describeDangerousMethod('rmdir', 'dummypath');
     describeDangerousMethod('unlink', 'dummypath');
     describeDangerousMethod('writeFile', 'dummypath', null);
+    describeDangerousMethod('createWriteStream', 'dummypath');
 
     function describeDangerousMethod(name, ...args) {
         describe(`#${name}`, () => {
