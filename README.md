@@ -180,6 +180,32 @@ dfs.unlink('/Path/To/file.txt', err => {
 - `path`: `String|Buffer`
 - `callback`: `Function`
 
+## createReadStream(path)
+
+Creates a readable stream.
+
+``` js
+const stream = fs.createReadStream('/test/test1.txt');
+stream.on('data', data => {
+    console.log('data', data);
+});
+stream.on('end', () => {
+    console.log('stream finished');
+});
+```
+
+## createWriteStream(path)
+
+Creates a writable stream.
+
+``` js
+const stream = fs.createWriteStream('/test/test1.txt');
+
+someStream().pipe(stream).on('finish', () => {
+    console.log('write stream finished');
+});
+```
+
 ## Stat Object
 
 The stat object that is returned from `writeFile()` and `stat()` contains two methods in addition to some standard information like `name`, etc:
