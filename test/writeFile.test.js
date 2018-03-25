@@ -11,17 +11,12 @@ describe('fs.writeFile()', function() {
     const testFileName = `${v4()}.txt`;
 
     it('Writes a file correctly', done => {
-        fs.writeFile(
-            `/write-test/${testFileName}`,
-            'testdata',
-            'utf8',
-            (err, stat) => {
-                assert.equal(err, null);
-                assert.equal(stat.isFile(), true);
-                assert.equal(stat.name, testFileName);
-                done();
-            }
-        );
+        fs.writeFile(`/write-test/${testFileName}`, 'testdata', (err, stat) => {
+            assert.equal(err, null);
+            assert.equal(stat.isFile(), true);
+            assert.equal(stat.name, testFileName);
+            done();
+        });
     });
 
     it('Overwrite throws error when disabled', done => {
