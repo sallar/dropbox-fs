@@ -1,7 +1,14 @@
 import normalDropboxFS from './index';
 
 // List of API methods that should be prevented in read-only mode
-const dangerousMethods = ['mkdir', 'rename', 'rmdir', 'unlink', 'writeFile'];
+const dangerousMethods = [
+    'mkdir',
+    'rename',
+    'rmdir',
+    'unlink',
+    'writeFile',
+    'createWriteStream'
+];
 
 /**
  * Create a read-only fs-like API for Dropbox
