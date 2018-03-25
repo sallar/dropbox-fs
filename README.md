@@ -1,4 +1,4 @@
-# dropbox-fs [![Build Status](https://travis-ci.org/sallar/dropbox-fs.svg?branch=master)](https://travis-ci.org/sallar/dropbox-fs) [![codecov](https://codecov.io/gh/sallar/dropbox-fs/branch/master/graph/badge.svg)](https://codecov.io/gh/sallar/dropbox-fs)
+# dropbox-fs [![Build Status](https://travis-ci.org/sallar/dropbox-fs.svg?branch=master)](https://travis-ci.org/sallar/dropbox-fs) [![codecov](https://codecov.io/gh/sallar/dropbox-fs/branch/master/graph/badge.svg)](https://codecov.io/gh/sallar/dropbox-fs) [![npm version](https://badge.fury.io/js/dropbox-fs.svg)](https://www.npmjs.com/package/dropbox-fs)
 
 Node [`fs`](https://nodejs.org/api/fs.html) wrapper for Dropbox. Wraps the [Dropbox](http://npmjs.com/package/dropbox) javascript module with an async `fs`-like API so it can be used where a fileSystem API is expected.
 
