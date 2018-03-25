@@ -224,7 +224,7 @@ export default ({ apiKey = null, client = null } = {}) => {
                 })
                 .catch(callback);
         },
-        
+
         /**
          * create write stream
          *

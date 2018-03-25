@@ -18,7 +18,7 @@ describe('fs.createWriteStream()', function() {
 
         stringToStream('testdata')
             .pipe(stream)
-            .on('finish', () => {
+            .on('metadata', () => {
                 fs.stat(name, (err, stat) => {
                     assert.equal(err, null);
                     assert.equal(stat.isFile(), true);
