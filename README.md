@@ -193,6 +193,7 @@ stream.on('end', () => {
     console.log('stream finished');
 });
 ```
+- `path`: `String|Buffer`
 
 ## createWriteStream(path)
 
@@ -205,6 +206,8 @@ someStream().pipe(stream).on('finish', () => {
     console.log('write stream finished');
 });
 ```
+
+- `path`: `String|Buffer`
 
 ## Stat Object
 
