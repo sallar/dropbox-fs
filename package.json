@@ -53,6 +53,6 @@
   },
   "dependencies": {
     "dropbox": "^2.3.0",
-    "dropbox-stream": "^2.0.0"
+    "dropbox-stream": "2.0.0"
   }
 }
