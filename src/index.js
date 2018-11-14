@@ -155,7 +155,7 @@ export default ({ apiKey = null, client = null } = {}) => {
                 .then(resp => {
                     if (resp.fileBinary) {
                         // Probably running in node: `fileBinary` is passed
-                        let buffer = Buffer.from(resp.fileBinary);
+                        let buffer = Buffer.from(resp.fileBinary, 'ascii');
                         buffer = encoding ? buffer.toString(encoding) : buffer;
                         __executeCallbackAsync(callback, [null, buffer]);
                     } else {
