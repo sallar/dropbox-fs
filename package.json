@@ -1,6 +1,6 @@
 {
   "name": "dropbox-fs",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Node FS wrapper for Dropbox API",
   "main": "dist/index.js",
   "scripts": {
@@ -53,6 +53,6 @@
   },
   "dependencies": {
     "dropbox": "^2.3.0",
-    "dropbox-stream": "^2.0.0"
+    "dropbox-stream": "2.0.0"
   }
 }
