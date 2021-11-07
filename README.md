@@ -23,7 +23,7 @@ dfs.readdir('/Public', (err, result) => {
 });
 ```
 
-Promises is also supported.
+Promises are also supported.
 
 ```js
 const dfs = require('dropbox-fs/promises')({
