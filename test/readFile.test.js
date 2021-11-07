@@ -30,4 +30,19 @@ describe('fs.readFile()', function() {
             }
         );
     });
+
+    it('Reads a file correctly with utf-8', done => {
+        fs.readFile(
+            '/utf8-test/utf8.txt',
+            {
+                encoding: 'utf8'
+            },
+            (err, result) => {
+                assert.equal(err, null);
+                assert.equal(typeof result, 'string');
+                assert.equal(result, 'brök');
+                done();
+            }
+        );
+    });
 });

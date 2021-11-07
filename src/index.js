@@ -105,7 +105,7 @@ export default ({ apiKey = null, client = null } = {}) => {
                     } else if (mode === 'stat') {
                         entries = entries.map(entry => __convertToStat(entry));
                     } else {
-                        return callback(new Error(`Unknow mode: ${mode}`));
+                        return callback(new Error(`Unknown mode: ${mode}`));
                     }
                     __executeCallbackAsync(callback, [null, entries]);
                 })
@@ -120,11 +120,11 @@ export default ({ apiKey = null, client = null } = {}) => {
          */
         mkdir(remotePath, callback) {
             client
-                .filesCreateFolder({ path: __normalizePath(remotePath) })
-                .then(meta => {
-                    meta['.tag'] = 'folder';
-                    meta = __convertToStat(meta);
-                    __executeCallbackAsync(callback, [null, meta]);
+                .filesCreateFolderV2({ path: __normalizePath(remotePath) })
+                .then(({ metadata }) => {
+                    metadata['.tag'] = 'folder';
+                    metadata = __convertToStat(metadata);
+                    __executeCallbackAsync(callback, [null, metadata]);
                 })
                 .catch(callback);
         },
@@ -155,7 +155,7 @@ export default ({ apiKey = null, client = null } = {}) => {
                 .then(resp => {
                     if (resp.fileBinary) {
                         // Probably running in node: `fileBinary` is passed
-                        let buffer = Buffer.from(resp.fileBinary);
+                        let buffer = Buffer.from(resp.fileBinary, 'ascii');
                         buffer = encoding ? buffer.toString(encoding) : buffer;
                         __executeCallbackAsync(callback, [null, buffer]);
                     } else {
@@ -184,7 +184,7 @@ export default ({ apiKey = null, client = null } = {}) => {
          */
         rename(fromPath, toPath, callback) {
             client
-                .filesMove({
+                .filesMoveV2({
                     from_path: __normalizePath(fromPath),
                     to_path: __normalizePath(toPath)
                 })
@@ -218,7 +218,7 @@ export default ({ apiKey = null, client = null } = {}) => {
          */
         unlink(remotePath, callback) {
             client
-                .filesDelete({ path: __normalizePath(remotePath) })
+                .filesDeleteV2({ path: __normalizePath(remotePath) })
                 .then(() => {
                     __executeCallbackAsync(callback, [null]);
                 })

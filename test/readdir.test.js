@@ -18,7 +18,7 @@ describe('fs.readdir()', function() {
 
     it('Handles buffer as filePath and cleans URL', done => {
         // This is buffer to test internal methods
-        const path = new Buffer('./', 'utf8');
+        const path = Buffer.from('./', 'utf8');
         fs.readdir(path, (err, result) => {
             assert.equal(err, null);
             done();
