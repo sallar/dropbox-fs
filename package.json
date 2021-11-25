@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "format": "prettier --write '{src,test}/**/*.js'",
-    "test": "nyc --require babel-core/register mocha",
+    "test": "nyc --require babel-core/register mocha --recursive",
     "nyc-report": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "prepublish": "npm run build"
   },
@@ -34,6 +34,8 @@
   },
   "homepage": "https://github.com/sallar/dropbox-fs#readme",
   "devDependencies": {
+    "@types/assert": "^1.5.6",
+    "@types/mocha": "^9.0.0",
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -42,8 +44,8 @@
     "codecov": "^1.0.1",
     "husky": "^0.14.3",
     "lint-staged": "^6.1.1",
-    "mocha": "^3.1.2",
-    "nyc": "^8.3.1",
+    "mocha": "^3.5.3",
+    "nyc": "^8.4.0",
     "prettier": "^1.10.2",
     "proxyquire": "^1.8.0",
     "pullout": "^1.0.2",

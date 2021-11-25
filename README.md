@@ -23,6 +23,14 @@ dfs.readdir('/Public', (err, result) => {
 });
 ```
 
+Promises are also supported.
+
+```js
+const dfs = require('dropbox-fs/promises')({
+    apiKey: 'DROPBOX_API_KEY_HERE'
+});
+```
+
 You can also pass in a `client` option if you’re using your own `dropbox` module instead of the `apiKey`.
 
 If you'd like some peace of mind then there's a read-only option too:
